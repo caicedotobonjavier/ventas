@@ -1,6 +1,8 @@
 from django.db import models
 #
 from model_utils.models import TimeStampedModel
+#
+from .managers import ProductoManager
 # Create your models here.
 
 class Marca(TimeStampedModel):
@@ -40,6 +42,8 @@ class Producto(TimeStampedModel):
     precio_venta = models.PositiveIntegerField('Precio de venta', default=2)
     disponible = models.BooleanField('Producto disponible', default=True)
     cantidad_vendida = models.PositiveIntegerField('Cantidad vendida', default=0)
+
+    objects = ProductoManager()
 
 
     class Meta:

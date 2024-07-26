@@ -2,11 +2,11 @@ from django.shortcuts import render
 #
 from .models import Marca, Provedor, Producto
 #
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
 #
 from rest_framework.views import APIView
 #
-from .serializers import MarcaSerializador, ProvedorSerializador, ProductoSerializador
+from .serializers import MarcaSerializador, ProvedorSerializador, ProductoSerializador, ProductosPorMarcasSerializador, ProductoHyperlinkSerilaizador
 #
 from rest_framework.response import Response
 # Create your views here.
@@ -80,3 +80,33 @@ class CrearProductoApi(CreateAPIView):
                 'Mensaje' : 'Producto creado correctamente'
             }
         )
+
+
+class LIstaMarcasApi(ListAPIView):
+    serializer_class = MarcaSerializador
+    queryset = Marca.objects.all()
+
+
+class LIstaProductosApi(ListAPIView):
+    serializer_class = ProductoSerializador
+    queryset = Producto.objects.all()
+
+
+class LIstaProvedoressApi(ListAPIView):
+    serializer_class = ProvedorSerializador
+    queryset = Provedor.objects.all()
+
+
+class ListaMarcasConProductos(ListAPIView):
+    serializer_class = ProductosPorMarcasSerializador
+    queryset = Marca.objects.all()
+
+
+class DetallesProvedorApi(RetrieveAPIView):
+    serializer_class = ProvedorSerializador
+    queryset = Provedor.objects.all()
+
+
+class ProductosListaHyperLinkApi(ListAPIView):
+    serializer_class = ProductoHyperlinkSerilaizador
+    queryset = Producto.objects.all()
