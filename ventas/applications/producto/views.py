@@ -14,28 +14,28 @@ from rest_framework.response import Response
 
 class CrearMarcaApi(CreateAPIView):
     serializer_class = MarcaSerializador
-    queryset = Marca.objects.all()
+    #queryset = Marca.objects.all()
     
 
     def create(self, request, *args, **kwargs):
-            serializador = self.serializer_class(data=request.data)
-            serializador.is_valid(raise_exception=True)
+        serializador = self.serializer_class(data=request.data)
+        serializador.is_valid(raise_exception=True)
 
-            Marca.objects.create(
-                nombre = serializador.validated_data['nombre']
-            )
+        Marca.objects.create(
+            nombre = serializador.validated_data['nombre']
+        )
         
-            return Response(
-                {
-                    'Mensaje' : 'Guardado Correctamente'
-                }
-            )
+        return Response(
+            {
+                'Mensaje' : 'Guardado Correctamente'
+            }
+        )
 
 
 
 class CrearProvedorApi(CreateAPIView):
     serializer_class = ProvedorSerializador
-    queryset = Provedor.objects.all()
+    #queryset = Provedor.objects.all()
 
     def create(self, request, *args, **kwargs):
         serializador = self.serializer_class(data=request.data)
@@ -58,7 +58,7 @@ class CrearProvedorApi(CreateAPIView):
 
 class CrearProductoApi(CreateAPIView):
     serializer_class = ProductoSerializador
-    queryset = Producto.objects.all()
+    #queryset = Producto.objects.all()
 
     def create(self, request, *args, **kwargs):
         serializador = self.serializer_class(data=request.data)
