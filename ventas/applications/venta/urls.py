@@ -10,4 +10,6 @@ urlpatterns = [
     path('aumentar/cantidad/producto/carrito/api/', views.AumentarCantidadProductoApi.as_view(), name='aumentar_cantidad_carrito'),
     path('disminuir/cantidad/producto/carrito/api/', views.DisminuirCantidadProductoApi.as_view(), name='disminuir_cantidad_carrito'),
     path('eliminar/articulo/carrito/api/', views.EliminarArticuloCarritoApi.as_view(), name='eliminar_artiuclo_carrito'),
+    #
+    path('crear/venta/api/', views.CrearVentaApi.as_view(), name='crear_venta'),
 ]

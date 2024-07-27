@@ -8,11 +8,13 @@ from rest_framework.generics import ListCreateAPIView, RetrieveAPIView, CreateAP
 #
 from rest_framework.views import APIView
 #
-from .serializers import AgregarCarritoCompraSerializador, ListaArticulosCarritoComprasSerializador
+from .serializers import AgregarCarritoCompraSerializador, ListaArticulosCarritoComprasSerializador, CrearVentaSerializador
 #
 from rest_framework.response import Response
 #
 from django.shortcuts import get_object_or_404
+#
+from .function import crear_venta
 # Create your views here.
 
 
@@ -89,6 +91,7 @@ class DisminuirCantidadProductoApi(APIView):
         )
 
 
+# Esta clase define al ejecutarse sirve para eliminar un artículo de un carrito de compras.
 class EliminarArticuloCarritoApi(APIView):  
     
     def post(self, request, *args, **kwargs):
@@ -102,3 +105,32 @@ class EliminarArticuloCarritoApi(APIView):
                 'Mensaje' : f'Se elimino el articulo: [{product}] del carrito de compras'
             }
         )
+
+
+# Esta clase de Python es una vista para crear un nuevo registro de venta usando un serializador y luego procesar los datos de venta.
+class CrearVentaApi(CreateAPIView):
+    serializer_class = CrearVentaSerializador
+
+    
+    def post(self, request, *args, **kwargs):
+        serializador = self.serializer_class(data=request.data)
+        serializador.is_valid(raise_exception=True)
+        
+        fecha_venta = serializador.validated_data['fecha_venta']
+        tipo_pago = serializador.validated_data['tipo_pago']
+
+        crear_venta(
+            self = self,            
+            tipo_pago = tipo_pago,
+            fecha_venta = fecha_venta,
+            cantidad_productos = 0,
+            total_venta = 0,
+            user = self.request.user
+        )
+
+
+        return Response(
+        {
+            'Mensaje' : 'Venta registrada correctamente'
+        }
+    )
