@@ -1,6 +1,8 @@
 # ventas
 Proyecto de practica para ventas
 
+Nota: Todo se realizara usando Django RestFrameWork
+
 Este proyecto tendra 3 apps: Users, Producto y Venta
 
 users : En esta app se crearan los usuarios segun se le especifique a el app mediante un modelo y manager
