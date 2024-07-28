@@ -108,7 +108,7 @@ class EliminarArticuloCarritoApi(APIView):
 
 
 # Esta clase de Python es una vista para crear un nuevo registro de venta usando un serializador y luego procesar los datos de venta.
-class CrearVentaApi(CreateAPIView):
+class CrearVentaApi(APIView):
     serializer_class = CrearVentaSerializador
 
     
@@ -119,7 +119,7 @@ class CrearVentaApi(CreateAPIView):
         fecha_venta = serializador.validated_data['fecha_venta']
         tipo_pago = serializador.validated_data['tipo_pago']
 
-        crear_venta(
+        venta = crear_venta(
             self = self,            
             tipo_pago = tipo_pago,
             fecha_venta = fecha_venta,
@@ -128,9 +128,8 @@ class CrearVentaApi(CreateAPIView):
             user = self.request.user
         )
 
-
         return Response(
         {
-            'Mensaje' : 'Venta registrada correctamente'
+            'Mensaje' : f'La venta se registro correctamente'
         }
     )

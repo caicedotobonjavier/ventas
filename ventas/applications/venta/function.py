@@ -49,3 +49,5 @@ def crear_venta(self, **datos_venta):
         nueva_venta.save()
 
         productos_carrito.delete()
+
+        return nueva_venta

@@ -46,3 +46,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     def get_email(self):
         return self.email
+
+    def get_ocupacion(self):
+        return self.ocupacion
