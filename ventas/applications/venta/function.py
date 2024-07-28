@@ -6,9 +6,11 @@ from .models import CarritoCompra, Venta, DetalleVenta
 from rest_framework.response import Response
 
 def crear_venta(self, **datos_venta):
-    """    
-    La función crea un nuevo registro de venta con detalles de los productos vendidos y actualiza la venta total.
-    cantidad y cantidad de productos.
+    """
+    La función crea un nuevo registro de ventas con el detalle de los productos vendidos y actualiza el total
+    ventas, cantidad y número de productos.
+    :return: La función `crear_venta` devuelve el objeto `Venta` recién creado, que representa
+    una transacción de venta con detalles de los productos vendidos.
     """
     productos_carrito = CarritoCompra.objects.all()
 
@@ -23,6 +25,7 @@ def crear_venta(self, **datos_venta):
         )
         
         lista_detalle = []
+        productos_vendidos = []
         cantidad_producto = 0
         valor_total = 0
 
@@ -35,13 +38,21 @@ def crear_venta(self, **datos_venta):
                 precio_venta = productos.producto.precio_venta
             )
 
-            lista_detalle.append(detalle)
+            lista_detalle.append(detalle)            
             cantidad_producto += productos.cantidad
             valor_total += productos.producto.precio_venta * productos.cantidad
-        
+
+            productos.producto.cantidad_vendida += productos.cantidad
+            productos.producto.cantidad -= productos.cantidad
+            productos_vendidos.append(productos.producto)
 
         DetalleVenta.objects.bulk_create(
             lista_detalle
+        )
+
+        Producto.objects.bulk_update(
+            productos_vendidos,
+            ['cantidad_vendida', 'cantidad']
         )
 
         nueva_venta.cantidad_productos = cantidad_producto
